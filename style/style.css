@@ -92,11 +92,14 @@ ol li
   height: 148px;}
 
 #boot{
-  color:rgb(81, 255, 0)
+  color:rgb(81, 255, 0);
+  padding: 160px 0 0 0;
+  letter-spacing: -1px;
+  text-decoration: none;
 }
 
 #logo
-{ width: 1250px;
+{ width: 1000px;
   position: relative;
   height: 148px;}
 
@@ -112,7 +115,7 @@ ol li
   margin: 0;}
 
 #logo_text h1, #logo_text h1 a, #logo_text h1 a:hover 
-{ padding: 22px 0 0 0;
+{ padding: 50px 0 0 0;
   color: rgb(255, 255, 255);
   letter-spacing: -1px;
   text-decoration: none;}
@@ -122,7 +125,7 @@ ol li
 
 #logo_text h2
 { font-size: 100%;
-  padding: 4px 0 0 0;
+  padding: 0px 0 0 0;
   color: #FFF;}
 
 #menubar
@@ -158,11 +161,10 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   }
 
 #site_content
-{ width: 1250px;
+{ width: 1000px;
   overflow: hidden;
   margin: 0 auto 0 auto;
-  padding: 60px 60px 60px 60px;
-  background: rgb(0, 0, 0);} 
+  padding: 60px 60px 60px 60px;} 
 
 .sidebar
 { float: right;
