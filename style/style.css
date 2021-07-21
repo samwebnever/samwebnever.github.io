@@ -83,7 +83,7 @@ ol li
   src: url(MSMINCHO.TTF);
 }
 
-#main, #logo, #menubar, #site_content, #footer
+#main, #logo, #menubar, #site_content, #footer, #pfp
 { margin-left: auto; 
   margin-right: auto;}
 
@@ -93,7 +93,7 @@ ol li
 
 #boot{
   color:rgb(81, 255, 0);
-  padding: 160px 0 0 0;
+  padding: 0px 0 0 0;
   letter-spacing: -1px;
   text-decoration: none;
 }
@@ -115,7 +115,7 @@ ol li
   margin: 0;}
 
 #logo_text h1, #logo_text h1 a, #logo_text h1 a:hover 
-{ padding: 50px 0 0 0;
+{ padding: 45px 0 0 0;
   color: rgb(255, 255, 255);
   letter-spacing: -1px;
   text-decoration: none;}
@@ -127,6 +127,12 @@ ol li
 { font-size: 100%;
   padding: 0px 0 0 0;
   color: #FFF;}
+
+#pfp {
+  position: absolute;
+  top: 90px;
+  left: -110px;
+}
 
 #menubar
 { width: 898px;
