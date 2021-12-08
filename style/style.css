@@ -112,7 +112,7 @@ ol li
   margin-right: auto;}
 
 #header
-{height: 285px;}
+{height: 265px;}
 
 #boot{
   color:rgb(255, 0, 0);
@@ -124,7 +124,7 @@ ol li
 #logo
 { width: 1000px;
   position: relative;
-  height: 148px;}
+  height: 130px;}
 
 #logo #logo_text 
 { position: absolute; 
@@ -138,7 +138,7 @@ ol li
   margin: 0;}
 
 #logo_text h1, #logo_text h1 a, #logo_text h1 a:hover 
-{ padding: 45px 0 0 0;
+{ padding: 25px 0 0 0;
   color: rgb(255, 255, 255);
   letter-spacing: -1px;
   text-decoration: none;}
@@ -229,12 +229,13 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 { width: 1000px;
   overflow: hidden;
   margin: 0 auto 0 auto;
-  padding: 0px 60px 60px 60px;} 
+  padding: 0px 60px 0px 60px;} 
 
 #site_content_aether{
   margin-left: auto; 
   margin-right: auto;
   width: 1000px;
+  height: 1060px;
   overflow: hidden;
 }
 
