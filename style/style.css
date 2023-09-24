@@ -29,7 +29,7 @@ h1, h2, h4, h5, h6
 { font: normal 175% MINCHO;
   color: rgb(255, 255, 255);
   margin: 0 0 0px 0;
-  padding: 60px 0 0px 0;}
+  padding: 40px 0 0px 0;}
 
 h2
 { font: normal 175% MINCHO}
@@ -170,7 +170,7 @@ ol li
 .menubar > div
 { float: left;
 	padding: 0px 0px 0px 0px;
-	width: 32%;
+	width: 21.5%;
 	text-align: center; 
 	box-sizing: border-box;
   flex:content;
