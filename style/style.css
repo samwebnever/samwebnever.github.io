@@ -229,6 +229,12 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   margin: 0 auto 0 auto;
   padding: 0px 60px 60px 60px;} 
 
+#site_content_crypt
+{ width: 1420px;
+  overflow: hidden;
+  margin: 0 auto 0 auto;
+  padding: 0px 60px 60px 60px;} 
+
 #site_content_index
 { width: 1000px;
   overflow: hidden;
