@@ -27,7 +27,6 @@ background: none;}
 
 progress[value] {
   position: relative;
-  top: -300px;
   width: 800px;
   height: 20px;
 }
@@ -177,7 +176,7 @@ ol li
 .menubar > div
 { float: left;
 	padding: 0px 0px 0px 0px;
-	width: 21.5%;
+	width: 22.5%;
 	text-align: center; 
 	box-sizing: border-box;
   flex:content;
@@ -186,7 +185,7 @@ ol li
 .menubar > div1
 { float: left;
 	padding: 0px 0px 0px 0px;
-	width: 17%;
+	width: 13%;
 	text-align: left; 
 	box-sizing: border-box;
 }
@@ -236,8 +235,8 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   margin: 0 auto 0 auto;
   padding: 0px 60px 60px 60px;} 
 
-#site_content_crypt
-{ width: 1420px;
+#site_content_scripture
+{ width: 1000px;
   overflow: hidden;
   margin: 0 auto 0 auto;
   padding: 0px 60px 60px 60px;} 
@@ -248,7 +247,7 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   margin: 0 auto 0 auto;
   padding: 0px 60px 0px 60px;} 
 
-#site_content_aether{
+#site_content_crypt_landing{
   margin-left: auto; 
   margin-right: auto;
   width: 1000px;
