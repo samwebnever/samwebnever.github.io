@@ -25,6 +25,13 @@ background: none;}
   left: 15px
 }
 
+progress[value] {
+  position: relative;
+  top: -300px;
+  width: 800px;
+  height: 20px;
+}
+
 h1, h2, h4, h5, h6 
 { font: normal 175% MINCHO;
   color: rgb(255, 255, 255);
