@@ -27,8 +27,10 @@ background: none;}
 
 progress[value] {
   position: relative;
-  width: 800px;
+  width: 500px;
   height: 20px;
+  top: -58px;
+  right: -220px;
 }
 
 .discordtwitter {
