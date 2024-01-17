@@ -200,7 +200,7 @@ ol li
 { float: left;
 	padding: 0px 0px 0px 0px;
 	width: 22.5%;
-	text-align: center; 
+	text-align: left; 
 	box-sizing: border-box;
   flex:content;
 }
