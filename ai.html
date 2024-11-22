@@ -1,59 +1,110 @@
-<!DOCTYPE HTML>
-<html>
-<!-- MADE IN A VACUUM! -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>SAM WEAVER</title>
-  <link rel="shortcut icon" href="favicon.ico"/>
-  <link rel="apple-touch-icon" href="images/pfp.jpg"/>
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAM WEAVER - AI</title>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
-
 <body>
-  <div id="main">
     <div id="header">
-      <div id="logo">
-        <!--<div id="pfp"><img src=https://pbs.twimg.com/profile_images/1433283857554370561/kGJqYGJX_400x400.jpg width=100></img></div>-->
-        <div id="logo_text">
-          <h1>SAM WEAVER</a></h1>
-          <div id="boot">
-            <p>NoWareOS [Version 88614] 🕸🕊</p>
-            <p>(c) 20dX NoWare(tm). All Rights Reserved. </p>
-          </div>
+        <div id="logo">
+            <div id="logo_text">
+                <h1>SAM WEAVER</h1>
+                <div id="boot">
+                    NoWareOS [Version 88614] 🕸🕊
+                    <br>
+                    (c) 20dX NoWare(tm). All Rights Reserved.
+                </div>
+            </div>
         </div>
-      </div>
-      <center><div class="menubar">
-        <div><h2><a href="/index">gallery</a></h2></div>
-        <div><a href="/ai"><h2 style='color: rgb(0, 255, 0)'>>ai</h2></a></div>
-        <div><h2><a href="/music">music</a></h2></div>
-        <div><h2><a href="/mixes">mixes</a></h2></div>
-      </div></center>
     </div>
 
-
-    <div id="site_content">
-      <h1></h1>
-      <center><img src='aiGen/final1.jpg' width=800><img></center>
-      <center><img src='aiGen/final0.jpg' width=800><img></center>
-      <center><img src='aiGen/0.png' width=800><img></center>
-      <center><img src='aiGen/jesus.png' width=800><img></center>
-      <center><img src='aiGen/lucyfurr.png' width=800><img></center>
-      <center><img src='aiGen/dual.png' width=800><img></center>
-      <center><img src='aiGen/iphoneprairie.jpg' width=800><img></center>
-      <center><img src='aiGen/stilllifeiphone.jpg' width=800><img></center>
-      <center><img src='aiGen/cigaretedeath.jpg' width=800><img></center>
-      <center><img src='aiGen/cyborgtimetravel.png' width=800><img></center>
-      <center><img src='aiGen/DDsNurse.png' width=800><img></center>
-      <center><img src='aiGen/channelly.png' width=800><img></center>
-      <center><img src='aiGen/k33alt.png' width=800></img></center>
+    <div class="menubar">
+        <div><a href="/gallery">gallery</a></div>
+        <div><a href="/ai" style="color: #00ff00">>ai</a></div>
+        <div><a href="/mixes">mixes</a></div>
     </div>
 
-    <div id="footer">
-
+    <div class="gallery-grid">
+        <!-- AI images -->
     </div>
-    
-  </div>
+
+    <div class="lightbox">
+        <img src="" alt="">
+    </div>
+
+    <script>
+        const images = [
+            'aiGen/final1.jpg',
+            'aiGen/final0.jpg',
+            'aiGen/0.png',
+            'aiGen/jesus.png',
+            'aiGen/lucyfurr.png',
+            'aiGen/dual.png',
+            'aiGen/iphoneprairie.jpg',
+            'aiGen/stilllifeiphone.jpg',
+            'aiGen/cigaretedeath.jpg',
+            'aiGen/cyborgtimetravel.png',
+            'aiGen/DDsNurse.png',
+            'aiGen/channelly.png',
+            'aiGen/k33alt.png'
+        ];
+
+        const galleryGrid = document.querySelector('.gallery-grid');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target.querySelector('img');
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.onload = () => img.classList.add('loaded');
+                        delete img.dataset.src;
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.1
+        });
+
+        images.forEach(imagePath => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            
+            const img = document.createElement('img');
+            img.dataset.src = imagePath;
+            img.alt = imagePath.split('/').pop().split('.')[0].replace(/%20/g, ' ');
+            img.loading = 'lazy';
+            
+            img.addEventListener('click', () => {
+                lightboxImg.src = imagePath;
+                lightboxImg.alt = img.alt;
+                lightbox.style.display = 'block';
+            });
+            
+            item.appendChild(img);
+            galleryGrid.appendChild(item);
+            observer.observe(item);
+        });
+
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.style.display === 'block') {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
