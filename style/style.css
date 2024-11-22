@@ -3,6 +3,7 @@
   src: url(MSMINCHO.TTF);
 }
 
+/* Base styles */
 body { 
   font: normal 1.2em MINCHO;
   background: #ffffff url(background.png) repeat;
@@ -10,18 +11,24 @@ body {
   color: rgb(255, 255, 255);
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
 
+/* Header styles with responsive adjustments */
 #header {
-  height: 265px;
+  height: auto;
+  padding: 20px 0;
 }
 
 #logo {
-  width: 1000px;
+  width: 90%;
+  max-width: 1000px;
   position: relative;
-  height: 130px;
+  height: auto;
   margin: 0 auto;
   text-align: center;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 #logo_text {
@@ -30,6 +37,7 @@ body {
   width: 100%;
   text-align: center;
 }
+
 #logo h1 { 
   font: normal 300% MINCHO;
   border-bottom: 0;
@@ -38,27 +46,35 @@ body {
   padding: 25px 0 0 0;
   color: rgb(255, 255, 255);
   letter-spacing: -1px;
+  font-size: clamp(2rem, 5vw, 3rem); /* Responsive font size */
 }
 
 #boot {
   color: rgb(0, 255, 0);
-  padding: 0px 0 0 0;
+  padding: 0;
   letter-spacing: -1px;
   text-decoration: none;
+  font-size: clamp(0.8rem, 2vw, 1.2rem); /* Responsive font size */
 }
 
+/* Navigation */
 .menubar {
-  width: 1000px;
+  width: 90%;
+  max-width: 1000px;
   position: relative;
-  padding: 0px 0px 100px 0px;
+  padding: 100px 0px 100px 0px;
   margin: 0 auto;
   display: flex;
-  font-size: 175%;
+  font-size: clamp(1.2rem, 3vw, 1.75rem); /* Responsive font size */
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  justify-content: center;
+  gap: 20px;
 }
 
 .menubar > div {
-  width: 33.33%;
+  width: auto;
   text-align: center;
+  padding: 0 100px;
 }
 
 .menubar a {
@@ -70,21 +86,40 @@ body {
   color: rgb(0, 255, 0);
 }
 
-/* Updated Gallery Styles */
+/* Content containers */
 .gallery-grid {
   display: flex;
   flex-direction: column;
   gap: 0px;
   padding: 20px;
+  width: 90%;
   max-width: 750px;
   margin: 0 auto;
 }
 
-.gallery-item {
-  width: 100%;
-  cursor: pointer;
+.soundcloud-container {
+  width: 90%;
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
+/* Media embeds */
+iframe {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+/* YouTube specific */
+iframe[src*="youtube"] {
+  aspect-ratio: 4/3;
+  height: auto;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+/* Image handling */
 .gallery-item img {
   width: 100%;
   height: auto;
@@ -97,7 +132,7 @@ body {
   opacity: 1;
 }
 
-/* Lightbox Styles */
+/* Lightbox adjustments */
 .lightbox {
   display: none;
   position: fixed;
@@ -121,8 +156,44 @@ body {
   cursor: auto;
 }
 
-.soundcloud-container {
-  max-width: 750px;
-  margin: 0 auto;
-  padding: 20px;
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  #header {
+      padding: 10px 0;
+  }
+  
+  .menubar {
+      padding: 100px 0px 100px 0px;
+  }
+  
+  .soundcloud-container,
+  .gallery-grid {
+      padding: 10px;
+  }
+  
+  iframe[src*="youtube"] {
+      height: 50vw;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  body {
+      font-size: 1em;
+  }
+  
+  #logo h1 {
+      padding: 15px 0 0 0;
+  }
+  
+  .menubar {
+      flex-direction: column;
+      gap: 25px;
+      padding: 100px 0px 100px 0px;
+  }
+  
+  .menubar > div {
+      width: 100%;
+      padding: 5px 0;
+  }
 }
