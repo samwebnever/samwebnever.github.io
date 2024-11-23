@@ -1,11 +1,13 @@
 @font-face {
   font-family: MINCHO;
-  src: url(MSMINCHO.TTF);
+  src: url(MSMINCHO.TTF) format('truetype');
+  font-display: swap; /* This will show a fallback font until MINCHO loads */
+  font-weight: normal;
+  font-style: normal;
 }
-
 /* Base styles */
 body { 
-  font: normal 1.2em MINCHO;
+  font-family: MINCHO, "MS Mincho", serif;
   background: #ffffff url(background.png) repeat;
   background-size: 455px;
   color: rgb(255, 255, 255);
