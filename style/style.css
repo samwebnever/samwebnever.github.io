@@ -1,10 +1,8 @@
 @font-face {
   font-family: MINCHO;
-  src: url(MSMINCHO.TTF) format('truetype');
-  font-display: swap; /* This will show a fallback font until MINCHO loads */
-  font-weight: normal;
-  font-style: normal;
+  src: url(MSMINCHO.TTF);
 }
+
 /* Base styles */
 body { 
   font-family: MINCHO, "MS Mincho", serif;
