@@ -1,7 +1,13 @@
 @font-face {
+  font-family: mixit;
+  src: url(mixit-webfont.ttf);
+}
+
+@font-face {
   font-family: MINCHO;
   src: url(MSMINCHO.TTF);
 }
+
 
 /* Base styles */
 body { 
