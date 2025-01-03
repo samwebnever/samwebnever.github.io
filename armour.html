@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAM WEAVER</title>
     <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
+
 <body>
     <div id="header">
         <div id="logo">
@@ -25,7 +27,8 @@
         <div><a href="/ai">ai</a></div>
         <div><a href="/mixes">mixes</a></div>
         <div><a href="/armour" style="color: #00ff00">>armour</a></div>
-        <div><a href="/lovenotesdeaththreats"><img src="images/OE2000.png" width="60px" style="margin-top: -15px;"></a></div>
+        <div><a href="/lovenotesdeaththreats"><img src="images/OE2000.png" width="60px" style="margin-top: -15px;"></a>
+        </div>
     </div>
 
     <div class="gallery-grid">
@@ -38,11 +41,19 @@
 
     <br><br><br><br><br><br><br><br>
 
-    <center><h1 style="font-family: mixit">AETHER WEBNEVER</h1></center>
+    <center>
+        <h1 style="font-family: mixit">AETHER WEBNEVER</h1>
+    </center>
 
-    <center><h3>nowareOS' Aether Webnever: "ARMOUR" inDev | release circa ~2028</h3></center>
-    <center><h3>aether<a href="https://webnever.github.io" target="_blank" style="color:#00ff00">webnever.github.io</a></h3></center>
-    <center><h3><a href="https://discord.gg/nnqb4uj8d4" target="_blank" style="color:#00ff00">discord</a> for updates</h3></center>
+    <center>
+        <h3>nowareOS' Aether Webnever: "ARMOUR" inDev | release circa ~2028</h3>
+    </center>
+    <center>
+        <h3>aether<a href="https://webnever.github.io" target="_blank" style="color:#00ff00">webnever.github.io</a></h3>
+    </center>
+    <center>
+        <h3><a href="https://discord.gg/nnqb4uj8d4" target="_blank" style="color:#00ff00">discord</a> for updates</h3>
+    </center>
 
     <br><br><br><br><br><br><br><br>
 
@@ -50,23 +61,28 @@
         const images = [
             'armourImages/logos.png',
             'armourImages/fortune.png',
-            'dnscrypt_dev/12.gif',   
-            'armourImages/game.gif',
-            'armourImages/awndev.png',         
+            'dnscrypt_dev/12.gif',
+            'armourImages/december272024720.mp4',
+            'armourImages/awndev.png',
         ];
 
         const galleryGrid = document.querySelector('.gallery-grid');
         const lightbox = document.querySelector('.lightbox');
-        const lightboxImg = lightbox.querySelector('img');
-        
+        const lightboxContent = lightbox.querySelector('img');
+
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const img = entry.target.querySelector('img');
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.onload = () => img.classList.add('loaded');
-                        delete img.dataset.src;
+                    const media = entry.target.querySelector('.gallery-media');
+                    if (media.dataset.src) {
+                        if (media.dataset.type === 'video') {
+                            media.src = media.dataset.src;
+                            media.controls = true;
+                        } else {
+                            media.src = media.dataset.src;
+                            media.onload = () => media.classList.add('loaded');
+                        }
+                        delete media.dataset.src;
                     }
                     observer.unobserve(entry.target);
                 }
@@ -76,27 +92,38 @@
             threshold: 0.1
         });
 
-        images.forEach(imagePath => {
+        images.forEach(mediaPath => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
-            
-            const img = document.createElement('img');
-            img.dataset.src = imagePath;
-            img.alt = imagePath.split('/').pop().split('.')[0].replace(/%20/g, ' ');
-            img.loading = 'lazy';
-            
-            img.addEventListener('click', () => {
-                lightboxImg.src = imagePath;
-                lightboxImg.alt = img.alt;
-                lightbox.style.display = 'block';
-            });
-            
-            item.appendChild(img);
+
+            const isVideo = mediaPath.match(/\.(mp4|webm|ogg)$/i);
+            const media = document.createElement(isVideo ? 'video' : 'img');
+            media.className = 'gallery-media';
+            media.dataset.src = mediaPath;
+            media.dataset.type = isVideo ? 'video' : 'image';
+            media.alt = mediaPath.split('/').pop().split('.')[0].replace(/%20/g, ' ');
+            media.loading = 'lazy';
+
+            if (isVideo) {
+                media.controls = true;
+            } else {
+                // Only add click event for images
+                media.addEventListener('click', () => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = mediaPath;
+                    imgElement.alt = media.alt;
+                    lightbox.innerHTML = '';
+                    lightbox.appendChild(imgElement);
+                    lightbox.style.display = 'block';
+                });
+            }
+
+            item.appendChild(media);
             galleryGrid.appendChild(item);
             observer.observe(item);
         });
 
-        // Close lightbox when clicking outside the image
+        // Close lightbox when clicking outside the media
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
                 lightbox.style.display = 'none';
@@ -111,4 +138,5 @@
         });
     </script>
 </body>
+
 </html>
