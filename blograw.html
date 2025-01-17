@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BLOG</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0px;
+            background: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .terminal {
+            position: relative;
+            height: 190vh;
+            background: black;
+            padding: 0px;
+            border-radius: 0px;
+            cursor: text;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .terminal-history-wrapper {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            scroll-behavior: smooth; /* Smooth scrolling */
+        }
+        
+        .terminal-history {
+            white-space: pre-wrap;
+            user-select: text;
+            min-height: 100%;
+            padding-bottom: 0px; /* Space for new content */
+        }
+        
+        .terminal-input-container {
+            position: sticky;
+            bottom: 0;
+            background: black;
+            width: 100%;
+            padding-top: 10px;
+        }
+        
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+        }
+        
+        .prompt {
+            margin-right: 8px;
+            color: #ffffff;
+            user-select: none;
+        }
+        
+        #commandInput {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            font-size: inherit;
+            flex-grow: 1;
+            outline: none;
+            caret-color: #ffffff;
+        }
+
+        #commandInput:not(:focus) {
+            caret-color: transparent;
+        }
+
+        .line {
+            min-height: 1.2em;
+            line-height: 1.2;
+        }
+
+        .command-line {
+            color: #ffffff;
+        }
+
+        .output-line {
+            color: #ffffff;
+        }
+
+        .error-line {
+            color: #ff9900;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" onclick="focusInput()">
+        <div class="terminal-history-wrapper" id="historyWrapper">
+            <div id="terminalHistory" class="terminal-history"></div>
+        </div>
+        <div class="terminal-input-container">
+            <div class="terminal-input-line">
+                <span class="prompt">user@server:~$ </span>
+                <input type="text" id="commandInput" autofocus>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class TerminalManager {
+            constructor() {
+                this.history = document.getElementById('terminalHistory');
+                this.historyWrapper = document.getElementById('historyWrapper');
+                this.commandInput = document.getElementById('commandInput');
+                this.currentDate = new Date();
+                
+                this.initializeTerminal();
+                this.setupEventListeners();
+            }
+
+            initializeTerminal() {
+                this.addLine("sam weaver's blog (starting jan 17 '25')", 'output');
+                this.addLine('"help" for available commands', 'output');
+            }
+
+            setupEventListeners() {
+                this.commandInput.addEventListener('keypress', async (e) => {
+                    if (e.key === 'Enter') {
+                        const command = this.commandInput.value;
+                        if (command.trim()) {
+                            await this.handleCommand(command);
+                        }
+                        this.commandInput.value = '';
+                    }
+                });
+            }
+
+            addLine(text, type = 'output', requirePrompt = false) {
+                const line = document.createElement('div');
+                line.className = `line ${type}-line`;
+                
+                if (requirePrompt) {
+                    line.textContent = `user@server:~$ ${text}`;
+                } else {
+                    line.textContent = text;
+                }
+                
+                this.history.appendChild(line);
+                this.scrollToBottom();
+            }
+
+            scrollToBottom() {
+                // Use requestAnimationFrame to ensure DOM is updated
+                requestAnimationFrame(() => {
+                    this.historyWrapper.scrollTop = this.historyWrapper.scrollHeight;
+                });
+            }
+
+            async handleCommand(cmd) {
+                const trimmedCmd = cmd.trim().toLowerCase();
+                this.addLine(cmd, 'command', true);
+
+                try {
+                    switch(trimmedCmd) {
+                        case 'help':
+                            this.showHelp();
+                            break;
+                        case 'clear':
+                            this.clearTerminal();
+                            break;
+                        case 'date':
+                            this.showDate();
+                            break;
+                        case 'load':
+                            await this.loadEntry();
+                            break;
+                        default:
+                            if (trimmedCmd.startsWith('setdate ')) {
+                                this.setDate(trimmedCmd.split(' ')[1]);
+                            } else {
+                                this.addLine(`Command not found: ${trimmedCmd}`, 'error');
+                            }
+                    }
+                } catch (error) {
+                    this.addLine(`Error: ${error.message}`, 'error');
+                }
+            }
+
+            showHelp() {
+                const helpText = [
+                    'Available commands:',
+                    '  help             - Show this help message',
+                    '  clear            - Clear the terminal',
+                    '  date             - Show current date',
+                    '  load             - Load blog entry for current date',
+                    '  setdate YYYYMMDD - Set date for loading entries'
+                ];
+                helpText.forEach(line => this.addLine(line));
+            }
+
+            clearTerminal() {
+                this.history.innerHTML = '';
+                this.addLine('Terminal cleared. Type "help" for commands');
+            }
+
+            showDate() {
+                const formattedDate = this.currentDate.toISOString().split('T')[0];
+                this.addLine(`Current date set to: ${formattedDate}`);
+            }
+
+            async loadEntry() {
+                const year = this.currentDate.getFullYear();
+                const month = String(this.currentDate.getMonth() + 1).padStart(2, '0');
+                const day = String(this.currentDate.getDate()).padStart(2, '0');
+                const formattedDate = `${year}${month}${day}`;
+                
+                this.addLine(`Loading entry for ${formattedDate}...`);
+                try {
+                    const response = await fetch(`/blog_entries/${formattedDate}.txt`);
+                    if (!response.ok) throw new Error('Entry not found');
+                    const text = await response.text();
+                    this.addLine('Entry found:');
+                    text.split('\n').forEach(line => this.addLine(line));
+                } catch (error) {
+                    this.addLine(`Error: Could not load blog entry`, 'error');
+                }
+            }
+
+            setDate(newDate) {
+                // Check for YYYYMMDD format (8 digits)
+                if (!/^\d{8}$/.test(newDate)) {
+                    throw new Error('Invalid date format. Use YYYYMMDD');
+                }
+                 // Parse YYYYMMDD into year, month, day
+                const year = newDate.substring(0, 4);
+                const month = newDate.substring(4, 6);
+                const day = newDate.substring(6, 8);
+                
+                // Create date object and validate it's a real date
+                const date = new Date(year, month - 1, day); // month is 0-based in JS
+                
+                // Verify the date is valid by checking if components match what we provided
+                // This catches invalid dates like 20240231 (February 31st)
+                if (date.getFullYear() !== parseInt(year) ||
+                    date.getMonth() !== parseInt(month) - 1 ||
+                    date.getDate() !== parseInt(day)) {
+                    throw new Error('Invalid date');
+                }
+                
+                this.currentDate = date;
+                this.addLine(`Date set to: ${newDate}`);
+            }
+        }
+
+        // Focus management
+        function focusInput() {
+            document.getElementById('commandInput').focus();
+        }
+
+        document.addEventListener('click', focusInput);
+        window.addEventListener('focus', focusInput);
+
+        // Initialize terminal
+        const terminal = new TerminalManager();
+        focusInput();
+    </script>
+</body>
+</html>
