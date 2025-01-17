@@ -108,13 +108,14 @@
                 this.historyWrapper = document.getElementById('historyWrapper');
                 this.commandInput = document.getElementById('commandInput');
                 this.currentDate = new Date();
+                this.terminalPassword = 'fuckyou!';
                 
                 this.initializeTerminal();
                 this.setupEventListeners();
             }
 
             initializeTerminal() {
-                this.addLine("sam weaver's blog (starting jan 17 '25')", 'output');
+                this.addLine("sam weaver's blog (starting jan 17 '25)", 'output');
                 this.addLine('"help" for available commands', 'output');
             }
 
@@ -213,9 +214,22 @@
                 try {
                     const response = await fetch(`/blog_entries/${formattedDate}.txt`);
                     if (!response.ok) throw new Error('Entry not found');
-                    const text = await response.text();
-                    this.addLine('Entry found:');
-                    text.split('\n').forEach(line => this.addLine(line));
+                    const encryptedText = await response.text();
+                    
+                    try {
+                        // Use the same password as the terminal encryption
+                        const bytes = CryptoJS.AES.decrypt(encryptedText, this.terminalPassword);
+                        const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+                        
+                        if (!decryptedText) {
+                            throw new Error('Decryption failed');
+                        }
+                        
+                        this.addLine('Entry found:');
+                        decryptedText.split('\n').forEach(line => this.addLine(line));
+                    } catch (error) {
+                        this.addLine('Error: Could not decrypt blog entry', 'error');
+                    }
                 } catch (error) {
                     this.addLine(`Error: Could not load blog entry`, 'error');
                 }

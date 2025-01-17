@@ -1,22 +1,176 @@
-<!-- encryptor.html -->
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Blog Entry Encryptor</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            background: #2d2d2d;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        button {
+            background: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background: #cccccc;
+        }
+
+        #error {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        #success {
+            color: #4caf50;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        #encryptedOutput {
+            min-height: 100px;
+        }
+    </style>
 </head>
 <body>
-    <textarea id="input" rows="10" cols="50">Paste your terminal code here</textarea><br>
-    <input type="password" id="password" placeholder="Enter password"><br>
-    <button onclick="encrypt()">Encrypt</button>
-    <textarea id="output" rows="10" cols="50"></textarea>
-    
+    <div class="container">
+        <h2>BLOG ENTRY ENCRYPTOR</h2>
+        
+        <div class="input-group">
+            <label for="filename">Filename (YYYYMMDD.txt):</label>
+            <input type="text" id="filename" placeholder="20250117.txt">
+        </div>
+
+        <div class="input-group">
+            <label for="blogEntry">Blog Entry Content:</label>
+            <textarea id="blogEntry" placeholder="Enter your blog entry here..."></textarea>
+        </div>
+
+        <div class="input-group">
+            <label for="password">Encryption Password:</label>
+            <input type="password" id="password">
+        </div>
+
+        <div id="error"></div>
+        <div id="success"></div>
+
+        <button onclick="encryptEntry()">Encrypt Entry</button>
+
+        <div class="input-group">
+            <label for="encryptedOutput">Encrypted Content:</label>
+            <textarea id="encryptedOutput" readonly></textarea>
+        </div>
+    </div>
+
     <script>
-        function encrypt() {
-            const text = document.getElementById('input').value;
-            const password = document.getElementById('password').value;
-            const encrypted = CryptoJS.AES.encrypt(text, password).toString();
-            document.getElementById('output').value = encrypted;
+        function validateFilename(filename) {
+            // Check if matches YYYYMMDD.txt format
+            return /^\d{8}\.txt$/.test(filename);
         }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('success').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+        }
+
+        function encryptEntry() {
+            const filename = document.getElementById('filename').value;
+            const blogEntry = document.getElementById('blogEntry').value;
+            const password = document.getElementById('password').value;
+            const outputField = document.getElementById('encryptedOutput');
+
+            // Validate inputs
+            if (!validateFilename(filename)) {
+                showError('Invalid filename format. Use YYYYMMDD.txt');
+                return;
+            }
+
+            if (!blogEntry.trim()) {
+                showError('Blog entry cannot be empty');
+                return;
+            }
+
+            if (!password) {
+                showError('Password is required');
+                return;
+            }
+
+            try {
+                // Encrypt the blog entry
+                const encrypted = CryptoJS.AES.encrypt(blogEntry, password).toString();
+                outputField.value = encrypted;
+                showSuccess('Entry encrypted successfully');
+                
+                // Verify encryption worked by trying to decrypt
+                const decrypted = CryptoJS.AES.decrypt(encrypted, password);
+                const decryptedText = decrypted.toString(CryptoJS.enc.Utf8);
+                
+                if (!decryptedText) {
+                    throw new Error('Encryption verification failed');
+                }
+            } catch (error) {
+                showError('Encryption failed: ' + error.message);
+                outputField.value = '';
+            }
+        }
+
+        // Auto-select encrypted output when clicking on it
+        document.getElementById('encryptedOutput').addEventListener('click', function() {
+            this.select();
+        });
     </script>
 </body>
 </html>
