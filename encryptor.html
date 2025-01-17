@@ -1,0 +1,22 @@
+<!-- encryptor.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <textarea id="input" rows="10" cols="50">Paste your terminal code here</textarea><br>
+    <input type="password" id="password" placeholder="Enter password"><br>
+    <button onclick="encrypt()">Encrypt</button>
+    <textarea id="output" rows="10" cols="50"></textarea>
+    
+    <script>
+        function encrypt() {
+            const text = document.getElementById('input').value;
+            const password = document.getElementById('password').value;
+            const encrypted = CryptoJS.AES.encrypt(text, password).toString();
+            document.getElementById('output').value = encrypted;
+        }
+    </script>
+</body>
+</html>
