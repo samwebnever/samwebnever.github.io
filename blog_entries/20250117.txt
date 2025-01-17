@@ -1,0 +1,25 @@
+TODAY'S AGENDA
+
+- SETUP PROJECT HYPERMETAL
+- SET UP GIT REPO
+- STARTING WITH QUAKE MOVEMENT
+- AND A GUN
+- PROGRAM GUN
+	- XYZ WITH PLAYER MOVEMENT
+	- SHOOT RAYCAST BULLETS, 100% ACCURACY
+	- PROGRAM RECOIL
+	- "EXPERIENCE BLISS" GRAFFITI ON THE GUN
+- LEARN GRAPHICS PROCESSING
+	- GODOT SHADERS
+- EXPERIENCE BLENDER
+	- MAKE COOL MESHES
+- INCREASE INTELLIGENCE FOLLOWING SUPERHUMAN PROTOCOL
+- DRAW A SYMBOL OVER A 3D WOMAN'S EYE FOR HYPERMETAL VIBES
+
+- remind urself that game-art can come later, systems are on time
+	- though u may find a hyper intellect within the arts; it's not currently a priority
+
+- or just chill on boon whenever u need
+
+---> Develop website for sudo nano journal and entry
+	/ maybe just json files on a server

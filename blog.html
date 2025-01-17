@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SAM WEAVER - BLOG</title>
+    <style>
+        #serverContent {
+            white-space: pre-wrap;
+            font-family: monospace;
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<!-- Using fetch to load from server -->
+<div>
+    <h3>Load entry from server by date:</h3>
+    <input type="date" id="dateInput">
+    <script>
+        // Set today's date as default
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        document.getElementById('dateInput').value = `${year}-${month}-${day}`;
+    </script>
+    <button onclick="loadServerFile()">Load Entry</button>
+    <div id="serverContent"></div>
+</div>
+<script>
+    // Load file from server
+    async function loadServerFile() {
+        try {
+            // Get the date from input
+            const dateInput = document.getElementById('dateInput');
+            const selectedDate = new Date(dateInput.value);
+            // Format date as YYYYMMDD
+            const year = selectedDate.getFullYear();
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const day = String(selectedDate.getDate()).padStart(2, '0');
+            const formattedDate = `${year}${month}${day}`;
+            // Fetch the file using the formatted date
+            const response = await fetch(`/blog_entries/${formattedDate}.txt`);
+            const text = await response.text();
+            document.getElementById('serverContent').textContent = text;
+        } catch (error) {
+            console.error('Error loading file:', error);
+            document.getElementById('serverContent').textContent = 'Error loading file';
+        }
+    }
+</script>
+</body>
+</html>
