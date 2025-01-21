@@ -108,7 +108,7 @@
                 this.historyWrapper = document.getElementById('historyWrapper');
                 this.commandInput = document.getElementById('commandInput');
                 this.currentDate = new Date();
-                this.terminalPassword = 'fuckyou!';
+                this.terminalPassword = 'DNSCRYPT';
                 
                 this.initializeTerminal();
                 this.setupEventListeners();
@@ -170,6 +170,14 @@
                         case 'load':
                             await this.loadEntry();
                             break;
+                            case 'today':
+                                const today = new Date();
+                                const todayFormatted = 
+                                    today.getFullYear().toString() +
+                                    (today.getMonth() + 1).toString().padStart(2, '0') +
+                                    today.getDate().toString().padStart(2, '0');
+                                this.setDate(todayFormatted);
+                                break;
                         default:
                             if (trimmedCmd.startsWith('setdate ')) {
                                 this.setDate(trimmedCmd.split(' ')[1]);
@@ -189,7 +197,8 @@
                     '  clear            - Clear the terminal',
                     '  date             - Show current date',
                     '  load             - Load blog entry for current date',
-                    '  setdate YYYYMMDD - Set date for loading entries'
+                    '  setdate YYYYMMDD - Set date for loading entries',
+                    '  today            - Set date to today'
                 ];
                 helpText.forEach(line => this.addLine(line));
             }
