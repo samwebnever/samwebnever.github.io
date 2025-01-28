@@ -34,87 +34,89 @@
 
     <div class="lightbox">
         <img src="" alt="">
+        <video controls style="display: none;"></video>
     </div>
 
     <script>
-        const images = [
-            'gallery/dns%20crypt.png',
-            'gallery/dosgoth.png',
-            'gallery/death.png',
-            'gallery/windows%20deathp.png',
-            'gallery/awc%20contrast.png',
-            'gallery/lucifer.png',
-            'gallery/notebook.png',
-            'gallery/windowsill.JPG',
-            'gallery/mirror.JPG',
-            'gallery/unknown.png',
-            'gallery/ring.JPG',
-            'gallery/heart.png',
-            'gallery/lsd.JPG',
-            'gallery/weeed.png',
-            'gallery/free%20dragon.JPG',
-            'gallery/nexus.png',
-            'gallery/awn.png',
-            'gallery/chest.JPG',
-            'gallery/connection.png',
-            'gallery/magic%20eye.png',
-            'gallery/never.jpg',
-            'gallery/stars.JPG',
-            'gallery/xoraphylcrescent.png',
-            'gallery/dna.png',
-            'gallery/blades.PNG',
-            'gallery/false%20thought%20dragon.png',
-            'gallery/matrix.JPG',
-            'gallery/meshhhh.png',
-            'gallery/netweb.png',
-            'gallery/lotus-transformed.png',
-            'gallery/techtriprip.png',
-            'gallery/web%20flower.png',
-            'gallery/dice.gif',
-            'gallery/feminine%20LSD.png',
-            'gallery/skeletons.PNG',
-            'gallery/skeletons2.PNG',
-            'gallery/arte%20moderna.png',
-            'gallery/apple%20pay.JPG',
-            'gallery/marblemoney.png',
-            'gallery/finaloutput3.gif',
-            'gallery/modern%20art.PNG',
-            'gallery/iphone%20prairie.png',
-            'gallery/nike%20angel.png',
-            'gallery/kali.png',
-            'gallery/clipart%20baphomet.JPG',
-            'gallery/allegory.png',
-            'gallery/paladin.png',
-            'gallery/jesusprimitave.png',
-            'gallery/got%20blood.png',
-            'gallery/trashmech.png',
-            'gallery/sundance.png',
-            'gallery/charge.JPG',
-            'gallery/jackal.png',
-            'gallery/ships%20without%20meaning.png',
-            'gallery/ships.png',
-            'gallery/mdma.JPG',
-            'gallery/bondage2.png',
-            'gallery/fish.png',
-            'gallery/blackflag.png',
-            'gallery/oxygen.png',
-            'gallery/salvation2.png',
-            'gallery/lotus2.png',
-            'gallery/pentagram.png'
+        const media = [
+            { type: 'image', path: 'gallery/dns%20crypt.png' },
+            { type: 'image', path: 'gallery/dosgoth.png' },
+            { type: 'image', path: 'gallery/death.png' },
+            { type: 'image', path: 'gallery/windows%20deathp.png' },
+            { type: 'image', path: 'gallery/awc%20contrast.png' },
+            { type: 'image', path: 'gallery/lucifer.png' },
+            { type: 'image', path: 'gallery/notebook.png' },
+            { type: 'image', path: 'gallery/windowsill.JPG' },
+            { type: 'image', path: 'gallery/mirror.JPG' },
+            { type: 'image', path: 'gallery/unknown.png' },
+            { type: 'image', path: 'gallery/ring.JPG' },
+            { type: 'image', path: 'gallery/heart.png' },
+            { type: 'image', path: 'gallery/lsd.JPG' },
+            { type: 'image', path: 'gallery/weeed.png' },
+            { type: 'image', path: 'gallery/free%20dragon.JPG' },
+            { type: 'image', path: 'gallery/nexus.png' },
+            { type: 'image', path: 'gallery/awn.png' },
+            { type: 'image', path: 'gallery/chest.JPG' },
+            { type: 'image', path: 'gallery/connection.png' },
+            { type: 'image', path: 'gallery/magic%20eye.png' },
+            { type: 'image', path: 'gallery/never.jpg' },
+            { type: 'image', path: 'gallery/stars.JPG' },
+            { type: 'image', path: 'gallery/xoraphylcrescent.png' },
+            { type: 'image', path: 'gallery/dna.png' },
+            { type: 'image', path: 'gallery/blades.PNG' },
+            { type: 'image', path: 'gallery/false%20thought%20dragon.png' },
+            { type: 'image', path: 'gallery/matrix.JPG' },
+            { type: 'image', path: 'gallery/meshhhh.png' },
+            { type: 'image', path: 'gallery/netweb.png' },
+            { type: 'image', path: 'gallery/lotus-transformed.png' },
+            { type: 'image', path: 'gallery/techtriprip.png' },
+            { type: 'image', path: 'gallery/web%20flower.png' },
+            { type: 'image', path: 'gallery/dice.gif' },
+            { type: 'image', path: 'gallery/feminine%20LSD.png' },
+            { type: 'image', path: 'gallery/skeletons.PNG' },
+            { type: 'image', path: 'gallery/skeletons2.PNG' },
+            { type: 'image', path: 'gallery/arte%20moderna.png' },
+            { type: 'image', path: 'gallery/apple%20pay.JPG' },
+            { type: 'image', path: 'gallery/marblemoney.png' },
+            { type: 'image', path: 'gallery/finaloutput3.gif' },
+            { type: 'image', path: 'gallery/modern%20art.PNG' },
+            { type: 'image', path: 'gallery/iphone%20prairie.png' },
+            { type: 'image', path: 'gallery/nike%20angel.png' },
+            { type: 'image', path: 'gallery/kali.png' },
+            { type: 'image', path: 'gallery/clipart%20baphomet.JPG' },
+            { type: 'image', path: 'gallery/allegory.png' },
+            { type: 'image', path: 'gallery/paladin.png' },
+            { type: 'image', path: 'gallery/jesusprimitave.png' },
+            { type: 'image', path: 'gallery/got%20blood.png' },
+            { type: 'image', path: 'gallery/trashmech.png' },
+            { type: 'image', path: 'gallery/sundance.png' },
+            { type: 'image', path: 'gallery/charge.JPG' },
+            { type: 'image', path: 'gallery/jackal.png' },
+            { type: 'image', path: 'gallery/ships%20without%20meaning.png' },
+            { type: 'image', path: 'gallery/ships.png' },
+            { type: 'image', path: 'gallery/mdma.JPG' },
+            { type: 'image', path: 'gallery/bondage2.png' },
+            { type: 'image', path: 'gallery/fish.png' },
+            { type: 'video', path: 'gallery/blackflag.mp4' },
+            { type: 'image', path: 'gallery/oxygen.png' },
+            { type: 'image', path: 'gallery/salvation2.png' },
+            { type: 'image', path: 'gallery/lotus2.png' },
+            { type: 'image', path: 'gallery/pentagram.png' }
         ];
 
         const galleryGrid = document.querySelector('.gallery-grid');
         const lightbox = document.querySelector('.lightbox');
         const lightboxImg = lightbox.querySelector('img');
+        const lightboxVideo = lightbox.querySelector('video');
         
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const img = entry.target.querySelector('img');
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.onload = () => img.classList.add('loaded');
-                        delete img.dataset.src;
+                    const mediaElement = entry.target.querySelector('img, video');
+                    if (mediaElement.dataset.src) {
+                        mediaElement.src = mediaElement.dataset.src;
+                        mediaElement.onload = () => mediaElement.classList.add('loaded');
+                        delete mediaElement.dataset.src;
                     }
                     observer.unobserve(entry.target);
                 }
@@ -124,30 +126,46 @@
             threshold: 0.1
         });
 
-        images.forEach(imagePath => {
+        media.forEach(mediaItem => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
             
-            const img = document.createElement('img');
-            img.dataset.src = imagePath;
-            img.alt = imagePath.split('/').pop().split('.')[0].replace(/%20/g, ' ');
-            img.loading = 'lazy';
+            let mediaElement;
+            if (mediaItem.type === 'image') {
+                mediaElement = document.createElement('img');
+            } else if (mediaItem.type === 'video') {
+                mediaElement = document.createElement('video');
+                mediaElement.controls = true;
+            }
             
-            img.addEventListener('click', () => {
-                lightboxImg.src = imagePath;
-                lightboxImg.alt = img.alt;
+            mediaElement.dataset.src = mediaItem.path;
+            mediaElement.alt = mediaItem.path.split('/').pop().split('.')[0].replace(/%20/g, ' ');
+            mediaElement.loading = 'lazy';
+            
+            mediaElement.addEventListener('click', () => {
+                if (mediaItem.type === 'image') {
+                    lightboxImg.src = mediaItem.path;
+                    lightboxImg.alt = mediaElement.alt;
+                    lightboxImg.style.display = 'block';
+                    lightboxVideo.style.display = 'none';
+                } else if (mediaItem.type === 'video') {
+                    lightboxVideo.src = mediaItem.path;
+                    lightboxVideo.style.display = 'block';
+                    lightboxImg.style.display = 'none';
+                }
                 lightbox.style.display = 'block';
             });
             
-            item.appendChild(img);
+            item.appendChild(mediaElement);
             galleryGrid.appendChild(item);
             observer.observe(item);
         });
 
-        // Close lightbox when clicking outside the image
+        // Close lightbox when clicking outside the media
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
                 lightbox.style.display = 'none';
+                lightboxVideo.pause();
             }
         });
 
@@ -155,6 +173,7 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && lightbox.style.display === 'block') {
                 lightbox.style.display = 'none';
+                lightboxVideo.pause();
             }
         });
     </script>

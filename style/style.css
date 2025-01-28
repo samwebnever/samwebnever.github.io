@@ -194,6 +194,31 @@ iframe[src*="youtube"] {
   }
 }
 
+/* Ensure videos in the gallery have the same width as images */
+.gallery-item video {
+  width: 100%;
+  height: auto;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  background: none;
+}
+
+.gallery-item video.loaded {
+  opacity: 1;
+}
+
+/* Ensure videos in the lightbox are styled consistently with images */
+.lightbox video {
+  max-width: 90%;
+  max-height: 90vh;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: auto;
+}
+
 /* Small mobile devices */
 @media (max-width: 480px) {
   body {
