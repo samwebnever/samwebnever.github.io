@@ -68,7 +68,7 @@
         const imageCache = new Map();
         
         function preloadImages() {
-            for (let i = 0; i <= 270; i++) {
+            for (let i = 0; i <= 400; i++) {
                 const img = new Image();
                 const paddedIndex = i.toString().padStart(4, '0');
                 img.src = `./dithered/${paddedIndex}.png`;
@@ -89,7 +89,7 @@
             img.className = 'scrolling-image';
 
             // Random image selection
-            const randomIndex = Math.floor(Math.random() * 271);
+            const randomIndex = Math.floor(Math.random() * 400);
             const paddedIndex = randomIndex.toString().padStart(4, '0');
             img.src = `./dithered/${paddedIndex}.png`;
 
