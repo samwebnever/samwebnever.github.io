@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>liked</title>
+    <style>
+        @font-face {
+            font-family: 'Mixit';
+            src: url('style/mixit-webfont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background: black;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Mixit';
+        }
+
+        #header {
+            color: white;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background: rgb(0, 0, 0);
+            z-index: 1000;
+        }
+
+        #imageContainer {
+            position: relative;
+            height: calc(100vh - 80px);
+            margin-top: 80px;
+            overflow: hidden;
+        }
+
+        .scrolling-image {
+            position: absolute;
+            width: 500px;
+            height: auto;
+            will-change: transform;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(-500px);
+            }
+            to {
+                transform: translateX(100vw);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>COPYLEFT ALL WRONGS RESERVED.</h1>
+    </div>
+    <div id="imageContainer"></div>
+
+    <script>
+        const imageContainer = document.getElementById('imageContainer');
+        const activeImages = new Set();
+        const minSpeed = 50;
+        const maxSpeed = 200;
+
+        // Preload images and store their dimensions
+        const imageCache = new Map();
+        
+        function preloadImages() {
+            for (let i = 0; i <= 270; i++) {
+                const img = new Image();
+                const paddedIndex = i.toString().padStart(4, '0');
+                img.src = `./dithered/${paddedIndex}.png`;
+                img.onload = () => {
+                    console.log(`Preloaded: ./dithered/${paddedIndex}.png`);
+                    imageCache.set(paddedIndex, {
+                        width: img.naturalWidth,
+                        height: img.naturalHeight
+                    });
+                };
+                img.onerror = () => console.error(`Failed to preload: ./dithered/${paddedIndex}.png`);
+            }
+        }
+        window.addEventListener('load', preloadImages);
+
+        function createImage() {
+            const img = document.createElement('img');
+            img.className = 'scrolling-image';
+
+            // Random image selection
+            const randomIndex = Math.floor(Math.random() * 271);
+            const paddedIndex = randomIndex.toString().padStart(4, '0');
+            img.src = `./dithered/${paddedIndex}.png`;
+
+            // Calculate scaled height based on fixed width of 500px
+            let imageHeight = 500; // Default height if image not cached
+            if (imageCache.has(paddedIndex)) {
+                const cachedDims = imageCache.get(paddedIndex);
+                imageHeight = (500 * cachedDims.height) / cachedDims.width;
+            }
+
+            // Adjust maxTop to prevent bottom clipping
+            const maxTop = imageContainer.offsetHeight - imageHeight;
+            const top = Math.max(0, Math.min(Math.random() * maxTop, maxTop));
+            img.style.top = `${top}px`;
+
+            // Random speed and animation
+            const speed = minSpeed + Math.random() * (maxSpeed - minSpeed);
+            const screenWidth = window.innerWidth;
+            const animationDuration = (screenWidth + 500) / speed;
+            img.style.animation = `scroll ${animationDuration}s linear forwards`;
+
+            img.onload = () => {
+                console.log(`Image loaded: ${img.src}`);
+                imageContainer.appendChild(img);
+                activeImages.add(img);
+            };
+
+            img.onerror = () => {
+                console.error(`Failed to load image: ${img.src}`);
+            };
+
+            img.onanimationend = () => {
+                console.log(`Animation ended: ${img.src}`);
+                img.remove();
+                activeImages.delete(img);
+            };
+        }
+
+        // Spawn a new image every 1 second
+        setInterval(createImage, 1000);
+
+        // Cleanup off-screen images
+        function updateImages() {
+            activeImages.forEach(img => {
+                const rect = img.getBoundingClientRect();
+                if (rect.left > window.innerWidth) {
+                    console.log(`Removing off-screen image: ${img.src}`);
+                    img.remove();
+                    activeImages.delete(img);
+                }
+            });
+        }
+
+        function gameLoop() {
+            updateImages();
+            requestAnimationFrame(gameLoop);
+        }
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>
