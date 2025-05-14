@@ -26,6 +26,12 @@ body {
   padding: 20px 0;
 }
 
+#header_image {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+}
+
 #logo {
   width: 90%;
   max-width: 1000px;
